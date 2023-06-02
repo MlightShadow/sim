@@ -2,16 +2,17 @@ const state = () => ({
     data: {
         round: 0,
         resource: {
-            gold: 0,
-            seed: {
-                seed1: 0,
-            },
-            product: {
-                product1: 0,
-            },
+            money: 0,
         },
-        farm: [],
-        task: [],
+        market: {
+            worker: [],
+            project: [],
+        },
+        mine: {
+            buff_position: [],
+            worker: [],
+            project: [],
+        },
     },
 });
 
@@ -23,12 +24,9 @@ const getters = {
 
 const actions = {
     round_handle(context) {
-        context.commit("round_handle");
-    },
-    paytax(context) {
-        context.commit("paytax");
-    },
-    save(context) {
+        context.commit("next_round");
+        context.commit("money_change");
+        //todo
         context.commit("save");
     },
     load(context) {
@@ -41,12 +39,12 @@ const actions = {
 };
 
 const mutations = {
-    round_handle(state) {
+    next_round(state) {
         state.data.round++;
         console.log("回合前进到了" + state.data.round);
     },
-    paytax(state) {
-        state.data.resource.gold--;
+    money_change(state) {
+        state.data.resource.money++;
         console.log("gold", state.data.resource.gold);
     },
     load(state, data) {

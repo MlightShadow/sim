@@ -1,6 +1,7 @@
 <template>
     <div id="app">
-        <a @click="next_round" href="#">next_round</a>
+        <a @click="next_round" href="#">next_round</a>&nbsp;
+        <a @click="clear_localstorage" href="#">clear</a>
         <router-view></router-view>
 
         <v-bottom-navigation v-model="value" fixed :absolute="false">
@@ -36,20 +37,17 @@ export default {
     },
     created() {
         this.$store.dispatch("load");
-        console.log(this.$store.getters.get);
     },
     methods: {
+        clear_localstorage() {
+            localStorage.clear();
+            location.reload();
+        },
         next_round() {
             this.$store.dispatch("round_handle");
         },
-        consul() {
-            this.$store.dispatch("paytax");
-            this.$store.dispatch("save");
-            console.log("ceshi");
-        },
     },
     mounted() {},
-    beforeDestroy() {},
 };
 </script>
 
