@@ -1,5 +1,6 @@
 const state = () => ({
     data: {
+        round: 0,
         resource: {
             gold: 0,
             seed: {
@@ -21,6 +22,9 @@ const getters = {
 };
 
 const actions = {
+    round_handle(context) {
+        context.commit("round_handle");
+    },
     paytax(context) {
         context.commit("paytax");
     },
@@ -37,6 +41,10 @@ const actions = {
 };
 
 const mutations = {
+    round_handle(state) {
+        state.data.round++;
+        console.log("回合前进到了" + state.data.round);
+    },
     paytax(state) {
         state.data.resource.gold--;
         console.log("gold", state.data.resource.gold);

@@ -1,44 +1,55 @@
 <template>
     <div id="app">
-        <img alt="Vue logo" src="./assets/logo.png" />
-        <!--资源栏位-->
+        <a @click="next_round" href="#">next_round</a>
+        <router-view></router-view>
 
-        <field msg="Welcome to Your Vue.js App" />
-        <!-- 选择 -->
-        {{ $store.getters.get }}
+        <v-bottom-navigation v-model="value" fixed :absolute="false">
+            <v-btn value="home" icon="home-o" to="/">
+                <span>主页</span>
+                <v-icon>mdi-home-outline</v-icon>
+            </v-btn>
+            <v-btn value="market" icon="shop-o" to="/market">
+                <span>市场</span>
+                <v-icon>mdi-shopping-outline</v-icon>
+            </v-btn>
+            <v-btn value="worker" icon="friends-o" to="/worker">
+                <span>工人</span>
+                <v-icon>mdi-account-hard-hat-outline</v-icon>
+            </v-btn>
+            <v-btn value="manage" icon="manager-o" to="/manage">
+                <span>管理</span>
+                <v-icon>mdi-domain</v-icon>
+            </v-btn>
+            <v-btn value="about" icon="setting-o" to="/about">
+                <span>关于</span>
+                <v-icon>mdi-information-outline</v-icon>
+            </v-btn>
+        </v-bottom-navigation>
     </div>
 </template>
 
 <script>
-import field from "./components/farm.vue";
-
 export default {
     name: "App",
     data() {
-        return {
-            timer: {}
-        }
-    },
-    components: {
-        field,
+        return { active: "home" };
     },
     created() {
-        this.$store.dispatch('load');
+        this.$store.dispatch("load");
         console.log(this.$store.getters.get);
     },
-    methods:{
-        consul(){
-            this.$store.dispatch('paytax')
-            this.$store.dispatch('save');
+    methods: {
+        next_round() {
+            this.$store.dispatch("round_handle");
+        },
+        consul() {
+            this.$store.dispatch("paytax");
+            this.$store.dispatch("save");
             console.log("ceshi");
-        }
+        },
     },
-    mounted() {
-        this.timer = setInterval(this.consul, 1000);
-    },
-    beforeDestroy() {
-        clearInterval(this.timer);
-    },
+    mounted() {},
+    beforeDestroy() {},
 };
 </script>
 
@@ -49,6 +60,6 @@ export default {
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
-    margin-top: 60px;
+    /* margin-top: 60px; */
 }
 </style>
